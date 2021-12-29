@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from ..accounts.models import CustomUser
 import uuid
 from django.utils import timezone
@@ -12,3 +13,16 @@ class PictData(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
     date = models.DateTimeField(default=timezone.now)
+
+
+class GoodPoint(models.Model):
+    pict = models.ForeignKey(PictData, on_delete=CASCADE)
+    text = models.TextField()
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+
+class DetailGoodPoint(models.Model):
+    goopo = models.ForeignKey(GoodPoint, on_delete=CASCADE)
+    text = models.TextField()
+    check = models.BooleanField(default=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
