@@ -1,8 +1,11 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
-from ..accounts.models import CustomUser
 import uuid
 from django.utils import timezone
+
+import sys
+sys.path.append("../")
+from accounts.models import CustomUser
 
 # Create your models here.
 
@@ -24,5 +27,5 @@ class GoodPoint(models.Model):
 class DetailGoodPoint(models.Model):
     goopo = models.ForeignKey(GoodPoint, on_delete=CASCADE)
     text = models.TextField()
-    check = models.BooleanField(default=False)
+    clear_check = models.BooleanField(default=False)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
