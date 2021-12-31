@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm
+from django import forms
 
 
 class LoginForm(AuthenticationForm):
@@ -11,3 +12,4 @@ class LoginForm(AuthenticationForm):
 
 class UserCreateForm():
     pass
+

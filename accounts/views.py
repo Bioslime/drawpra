@@ -36,3 +36,7 @@ class UserCreate(generic.CreateView):
             'token': dumps(user.pk),
             'user': user,
         }
+
+
+class UserCreateDone(generic.CreateView):
+    pass
