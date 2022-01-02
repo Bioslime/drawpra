@@ -1,7 +1,14 @@
 from django import forms
+from django.db.models import fields
 from . import models
 
-class PictureForm(forms):
+class PictureForm(forms.ModelForm):
     class Meta:
         model = models.PictData
-        fields = ("picture", "url", "title")
+        fields = ("user", "picture", "title")
+
+
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = models.TestModel
+        fields = ("picture", "title", )

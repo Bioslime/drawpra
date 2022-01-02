@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>Upload</title>
+    </head>
+    <body>
+        <h1>{{ title }}</h1>
+        <p>{{ Message|safe }}</p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" value="submit">Upload</button>
+        </form>
+    </body>
+</html>

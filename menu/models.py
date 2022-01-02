@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.deletion import CASCADE
 import uuid
+from django.db.models.fields import NullBooleanField
 from django.utils import timezone
 
 import sys
@@ -11,11 +12,13 @@ from accounts.models import CustomUser
 
 class PictData(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    picture = models.ImageField()
-    url = models.URLField(blank=False, null=False)
+    picture = models.ImageField(upload_to='pictdata/', default='defo')
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
     date = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return self.title
 
 
 class GoodPoint(models.Model):
@@ -29,3 +32,11 @@ class DetailGoodPoint(models.Model):
     text = models.TextField()
     clear_check = models.BooleanField(default=False)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+
+class TestModel(models.Model):
+    picture = models.ImageField(upload_to="test", default="defo")
+    title = models.CharField(max_length=100)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    def __str__(self):
+        return self.title
