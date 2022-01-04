@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Upload</title>
+    </head>
+    <body>
+        <p> {{ item.title }} </p>
+        <img src="{{ item.picture.url }}" alt="">
+        <p> {{ item.id }} </p> 
+        <a href = "{% url 'menu:testlist' %}"> 一覧へ戻る </a>
+    </body>
+</html>
