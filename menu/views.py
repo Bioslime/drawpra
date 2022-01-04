@@ -3,7 +3,8 @@ from .forms import PictureForm, TestForm
 from .models import PictData, TestModel
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class PictFormView(LoginRequiredMixin, CreateView):
@@ -34,32 +35,23 @@ class PostLsit(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return PictData.objects.filter(user=self.request.user)
 
-
-class TestFormView(CreateView):
-    form_class = TestForm
-    template_name = "menu/testmodel_form.html"
-    success_url = reverse_lazy('menu:testlist')
-
-    def form_valid(self, form):
-        ''' バリデーションを通った時 '''
-        messages.success(self.request, "保存しました")
-        return super().form_valid(form)
-
-    def form_invalid(self, form):
-        ''' バリデーションに失敗した時 '''
-        messages.warning(self.request, "保存できませんでした")
-        return super().form_invalid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
 
 
-class TestDetailView(DetailView):
-    model = TestModel
-    template_name = "menu/testmodel_detail.html"
+class PostDetail(UserPassesTestMixin, LoginRequiredMixin, DetailView):
+    model = PictData
+    template_name = "menu/postdetail.html"
     context_object_name = "item"
 
-class TestListView(ListView):
-    model = TestModel
-    context_object_name = "items"
+    def test_func(self):
+        post_object = self.get_object()
+        return self.request.user.id == post_object.user.id
 
+    def handle_no_permission(self):
+        return redirect("menu:postlist")
 
 
 

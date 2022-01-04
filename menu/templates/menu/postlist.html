@@ -5,10 +5,10 @@
 <h1>投稿一覧</h1>
 <ul>
     {% if user.is_authenticated %}
-    <p>test</p>
         {% for item in items %}
-        {{ item.id }}
+        <a href=" {% url 'menu:postdetail' item.pk %} "> 
             <img src="{{ item.picture.url }}" alt="">
+        </a>
         {% endfor %}
     {% endif %}
 </ul>

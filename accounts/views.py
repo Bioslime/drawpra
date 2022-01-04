@@ -9,7 +9,7 @@ from django.urls import reverse, reverse_lazy
 class UserRegister(CreateView):
     template_name = "accounts/register.html"
     form_class = UserCreateForm
-    success_url = reverse_lazy("accounts:top")
+    success_url = reverse_lazy("menu:top")
 
     def form_valid(self, form):
         messages.success(self.request, "新規データを作成しました")
