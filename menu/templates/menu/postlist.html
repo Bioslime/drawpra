@@ -1,0 +1,15 @@
+{% extends "accounts/base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<h1>投稿一覧</h1>
+<ul>
+    {% if user.is_authenticated %}
+    <p>test</p>
+        {% for item in items %}
+        {{ item.id }}
+            <img src="{{ item.picture.url }}" alt="">
+        {% endfor %}
+    {% endif %}
+</ul>
+{% endblock %}

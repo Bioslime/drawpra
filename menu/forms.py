@@ -5,7 +5,7 @@ from . import models
 class PictureForm(forms.ModelForm):
     class Meta:
         model = models.PictData
-        fields = ("user", "picture", "title")
+        fields = ("picture", "title")
 
 
 class TestForm(forms.ModelForm):

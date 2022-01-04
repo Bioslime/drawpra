@@ -1,12 +1,23 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.signing import BadSignature, SignatureExpired, loads, dumps
-from django.views import generic
+from django.views.generic import CreateView, TemplateView
 from .forms import LoginForm, UserCreateForm
+from django.contrib import messages
+from django.urls import reverse, reverse_lazy
 
-class Top(generic.TemplateView):
-    template_name = 'accounts/top.html'
+
+class UserRegister(CreateView):
+    template_name = "accounts/register.html"
+    form_class = UserCreateForm
+    success_url = reverse_lazy("accounts:top")
+
+    def form_valid(self, form):
+        messages.success(self.request, "新規データを作成しました")
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        messages.success(self.request, "作成に失敗しました")
+        return super().form_invalid(form)
 
 
 class Login(LoginView):
@@ -15,28 +26,9 @@ class Login(LoginView):
 
 
 class Logout(LogoutView):
-    template_name = 'accounts/top.html'
-
-
-class UserCreate(generic.CreateView):
-    """ユーザー仮登録"""
-    template_name = 'register/user_create.html'
-    form_class = UserCreateForm
-
-    def form_valid(self, form):
-        user = form.save(commit=False)
-        user.is_active = False
-        user.save()
-
-        current_site = get_current_site(self.request)
-        domain = current_site.domain
-        context = {
-            'protocol': self.request.scheme,
-            'domain': domain,
-            'token': dumps(user.pk),
-            'user': user,
-        }
-
-
-class UserCreateDone(generic.CreateView):
+    # template_name = 'menu/top.html'
     pass
+
+
+# class UserCreateDone(generic.CreateView):
+#     pass

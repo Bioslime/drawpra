@@ -1,12 +1,8 @@
+{% extends "accounts/base.html" %}
+{% load widget_tweaks %}
 {% load static %}
-<!DOCTYPE html>
-    <html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <title>Upload</title>
-    </head>
-    <body>
-        {% if messages %}
+{% block content %}
+{% if messages %}
             <ul class="{{ messages.tag }}">
                 {% for message in messages %}
                     <li {%if message.tag %} class="{{ message.tags }}" {% endif %}>
@@ -22,5 +18,4 @@
             </table>
             <input type="submit" >
         </form>
-    </body>
-</html>
+{% endblock %}

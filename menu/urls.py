@@ -5,7 +5,6 @@ from . import views
 app_name = "menu"
 urlpatterns =[
     path("formtest/", views.PictFormView.as_view(), name="formtest"),
-    path("test/", views.TestFormView.as_view(),  name="test"),
-    path("testlist/", views.TestListView.as_view(), name="testlist"),
-    path("testdetail/<uuid:pk>/", views.TestDetailView.as_view(), name="testdetail"),
+    path("top/",views.Top.as_view(), name="top" ),
+    path("postlist/", views.PostLsit.as_view(), name="postlist"),
 ]

@@ -5,11 +5,10 @@ class CustomUserManager(UserManager):
     use_in_migrations = True
 
     def _create_user(self, email, username, password, **extra_fields):
-        if not email:
-            raise ValueError('email must be set')
         if not username:
             raise ValueError('username must be set')
-
+        if email:
+            email = self.normalize_email(email)
         user = self.model(email=email, username=username, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -17,8 +16,6 @@ class CustomUserManager(UserManager):
         return user
 
     def create_user(self, username, email=None, password=None, **extra_fields):
-        if not email:
-            raise ValueError('email must be set')
         if not username:
             raise ValueError('username must be set')
 
@@ -45,4 +42,4 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return self.username

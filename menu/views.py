@@ -1,31 +1,38 @@
 from django.views.generic import TemplateView, CreateView, ListView, DetailView
 from .forms import PictureForm, TestForm
 from .models import PictData, TestModel
-from django.shortcuts import redirect, render, resolve_url
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class PictFormView(TemplateView):
-    def __init__(self):
-        self.params = {
-            "title":"画像投稿",
-            "Message": "データを入力してください",
-            "form": PictureForm(),
-        }
+class PictFormView(LoginRequiredMixin, CreateView):
+    form_class = PictureForm
+    template_name = "menu/testmodel_form.html"
+    success_url = reverse_lazy("menu:top")
 
-    def get(self, request):
-        return render(request, "menu/form.html", context=self.params)
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        messages.success(self.request, "新規データを作成しました")
+        return super().form_valid(form)
 
-    def post(self, request):
-        if request.method == "POST":
-            self.params["form"] = PictureForm(request.POST)
+    def form_invalid(self, form):
+        messages.success(self.request, "作成に失敗しました")
+        return super().form_invalid(form)
 
-            if self.params["form"].is_valid():
-                self.params["form"].save()
-                self.params["Message"] = "送信されました"
 
-        return render(request, "menu/form.html", context=self.params)
+class Top(TemplateView):
+    model = PictData
+    template_name = 'menu/top.html'
+
+
+class PostLsit(LoginRequiredMixin, ListView):
+    model = PictData
+    context_object_name = "items"
+    template_name = "menu/postlist.html"
+
+    def get_queryset(self):
+        return PictData.objects.filter(user=self.request.user)
 
 
 class TestFormView(CreateView):
