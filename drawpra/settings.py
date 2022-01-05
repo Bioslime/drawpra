@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'allauth', 
     'allauth.account', 
     'allauth.socialaccount', 
+    'django_cleanup.apps.CleanupConfig',
+    'sorl.thumbnail', 
 ]
 
 SITE_ID = 1
@@ -128,8 +130,9 @@ AUTHENTICATION_BACKENDS = (
 ACCOUNT_USERNAME_REQUIRED = True
  
 LOGIN_URL = 'accounts:login' 
-LOGIN_REDIRECT_URL = 'accounts:top' 
-ACCOUNT_LOGOUT_REDIRECT_URL = 'accounts:login' 
+LOGIN_REDIRECT_URL = 'menu:top' 
+ACCOUNT_LOGOUT_REDIRECT_URL = 'menu:top' 
+LOGOUT_REDIRECT_URL = 'menu:top'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

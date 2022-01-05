@@ -1,5 +1,6 @@
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
+from .models import CustomUser
 
 
 class LoginForm(AuthenticationForm):
@@ -10,6 +11,10 @@ class LoginForm(AuthenticationForm):
             field.widget.attrs['placeholder'] = field.label
 
 
-class UserCreateForm():
-    pass
+class UserCreateForm(UserCreationForm):
+    username = forms.CharField(required=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ("username", "password1", "password2", "email",)
 

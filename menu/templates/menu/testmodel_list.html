@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+    <html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Upload</title>
+    </head>
+    <body>
+        <ul>
+            {% for item in items %}
+                <!-- <img src="{{ item.picture.url }}" alt=""> -->
+                <li><a href="{% url 'menu:testdetail' item.pk %}">{{ item.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </body>
+</html>

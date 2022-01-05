@@ -1,0 +1,13 @@
+{% extends "accounts/base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<h1>投稿詳細</h1>
+<ul>
+    <li>タイトル : {{ item.title }}</li>
+    <li>作者 : {{ item.user.username }}</li>
+    <li>日付 : {{ item.date }}</li>
+    <li><img src="{{ item.picture.url }}" alt=""></li>
+</ul>
+<a href = "{% url 'menu:postlist' %}"> 一覧へ戻る </a>
+{% endblock %}
