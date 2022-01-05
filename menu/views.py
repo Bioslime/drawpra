@@ -1,6 +1,6 @@
 from django.db.models.base import Model
 from django.views.generic import TemplateView, CreateView, ListView, DetailView
-from .forms import PictureForm, GoodPointForm, MinuteGoodPointForm
+from .forms import PictureForm, GoodPointForm, MinuteGoodPointForm, CheckForm
 from .models import GoodPoint, PictData, MinuteGoodPoint
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
@@ -130,6 +130,8 @@ class GoodPointDetail(UserPassesTestMixin, LoginRequiredMixin, DetailView, Model
         context.update({
             "minuteGP_form":GoodPointForm,
             "minuteGP_model":MinuteGoodPoint.objects.filter(gopo=self.object),
+            "minuteGP_check": CheckForm,
+            "pict": self.object.pict,
         })
         return context
 
@@ -146,3 +148,6 @@ class GoodPointDetail(UserPassesTestMixin, LoginRequiredMixin, DetailView, Model
             else:
                 self.object = self.get_object()
                 return self.form_invalid(form_obj)
+
+        if 'check_btn_minuteGP' in request.POST:
+            check = request.POST.getlist["check_minuteGP"]
