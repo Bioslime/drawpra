@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'allauth', 
     'allauth.account', 
     'allauth.socialaccount', 
+    'django_cleanup.apps.CleanupConfig',
+    'sorl.thumbnail', 
 ]
 
 SITE_ID = 1

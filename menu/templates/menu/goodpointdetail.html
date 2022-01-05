@@ -1,0 +1,38 @@
+{% extends "accounts/base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<h1>コメント詳細</h1>
+<ul>
+    <li>タイトル : {{ item.text }}</li>
+    <li>ID : {{ item.id }}</li>
+</ul>
+
+<ul>
+    {% for point in minuteGP_model %}
+        <li>
+            <tb>
+                <tr>{{ point.text }}</tr>
+                <tr>
+                    {% if point.check %}
+                        <P>OK</P>
+                    {% else %}
+                        <p>NO</p>
+                    {% endif %}
+                </tr>
+            </tb>
+        </li>
+    {% endfor %}
+</ul>
+
+<form action="" method="POST" name="form_change_minuteGP" id="form_change_minuteGP_detail">
+    {% csrf_token %}
+    {{ minuteGP_form.non_field_errors }}
+    <div class="form-group">
+        {{minuteGP_form.as_p}}
+        <button type="submit" class="btn btn-primary" name="button_change_minuteGP">追加</button>
+    </div>
+</form>
+
+<a href = "{% url 'menu:postlist' %}"> 一覧へ戻る </a>
+{% endblock %}
