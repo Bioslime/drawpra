@@ -18,12 +18,13 @@
             <div class="border m-2 px-4 py-2">
                 {{ item.text }} 
             </div>
+            <a href="{% url 'menu:GPdelete' item.pk %}" class="btn btn-danger">削除</a>
         </div>
     </div>
 </div>
 
-<div class="container">
-    <ul class="list-group list-group-flush">
+<div class="container mb-4">
+    <ul class="list-group list-group-flush mx-2">
         {% for point in minuteGP_model %}
             <li class="list-group-item p-3">
                 {{ point.text }}
@@ -38,10 +39,10 @@
         {{ minuteGP_form.non_field_errors }}
         <div class="form-group">
             {{minuteGP_form.as_p}}
-            <button type="submit" class="btn btn-primary" name="button_change_minuteGP">追加</button>
+            <button type="submit" class="btn btn-secondary" name="button_change_minuteGP">追加</button>
         </div>
     </form>
 </div>
 
-<a href = "{% url 'menu:postlist' %}"> 一覧へ戻る </a>
+<a href = "{% url 'menu:postdetail' item.pict.pk %}"> イラスト詳細へ戻る </a>
 {% endblock %}

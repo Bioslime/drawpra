@@ -8,6 +8,7 @@
     <li>作者 : {{ item.user.username }}</li>
     <li>日付 : {{ item.date }}</li>
     <li><img src="{{ item.picture.url }}" alt=""></li>
+    <li><a href="{% url 'menu:postdelete' item.pk %}" class="align-items-end">削除</a></li>
 </ul>
 <a href = "{% url 'menu:postlist' %}"> 一覧へ戻る </a>
 {% endblock %}

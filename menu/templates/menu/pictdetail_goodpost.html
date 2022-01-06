@@ -8,11 +8,12 @@
         <div class="col-4">
             <img src="{{ item.picture.url }}" alt="" class="rounded float-right img-fluid">
         </div>
-        <div class="col-8">
+        <div class="col-8 px-4">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item p-4">{{ item.title }}</li>
                 <li class="list-group-item p-4"> {{ item.user.username }}</li>
                 <li class="list-group-item p-4">{{ item.date }}</li>
+                <li class="list-group-item p-4"><a href="{% url 'menu:postdelete' item.pk %}" class="btn btn-danger">削除</a></li>
             </ul>
         </div>
     </div>
@@ -32,7 +33,7 @@
         {{ goodpoint_form.non_field_errors }}
         <div class="form-group">
             {{goodpoint_form.as_p}}
-            <button type="submit" class="btn btn-primary" name="button_change_goodpoint">追加</button>
+            <button type="submit" class="btn btn-secondary" name="button_change_goodpoint">追加</button>
         </div>
     </form>
 </div>

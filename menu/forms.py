@@ -7,6 +7,10 @@ class PictureForm(forms.ModelForm):
     class Meta:
         model = models.PictData
         fields = ("picture", "title")
+        labels = {
+            "picture" : "登録イラスト ",
+            "title" : "イラストタイトル ",
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -18,6 +22,9 @@ class GoodPointForm(forms.ModelForm):
     class Meta:
         model = models.GoodPoint
         fields = ("text",)
+        labels = {
+            "text" : "イラストの好きなところ",
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -29,6 +36,9 @@ class MinuteGoodPointForm(forms.ModelForm):
     class Meta:
         model = models.MinuteGoodPoint
         fields = ("text",)
+        labels = {
+            "text" : "好きなところを詳しく",
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

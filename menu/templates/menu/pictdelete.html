@@ -1,0 +1,23 @@
+{% extends "accounts/base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<div class="container my-3">
+    <div class="row d-flex align-items-center ">
+        <div class="col-4">
+            <img src="{{ item.picture.url }}" alt="" class="rounded float-right img-fluid">
+        </div>
+        <div class="col-4">
+            <form method="post">
+                {% csrf_token %}
+                <p> {{ item.title }} を削除しますか？</p>
+                <input type="submit" class="btn btn-danger btn-lg btn-block" value="削除する">
+            </form>
+        </div>
+    </div>
+    <div class="row m-2">
+        <a href = "{% url 'menu:postlist' %}"> 一覧へ戻る </a>
+    </div>
+</div>
+
+{% endblock %}
