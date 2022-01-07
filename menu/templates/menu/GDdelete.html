@@ -8,11 +8,10 @@
             <form method="post">
                 {% csrf_token %}
                 <p>コメント内容</p>
-                <hr>
                 <div class="card"> 
                     <h4 class="card-body"> {{ item.text }} </h4>
                 </div>
-                <input type="submit" class="btn btn-danger" value="削除する">
+                <input type="submit" class="btn btn-danger m-3" value="削除する">
             </form>
         </div>
     </div>
