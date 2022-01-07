@@ -1,6 +1,6 @@
 from django.db.models.base import Model
-from django.views.generic import TemplateView, CreateView, ListView, DetailView
-from .forms import PictureForm, GoodPointForm, MinuteGoodPointForm
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, DeleteView
+from .forms import PictureForm, GoodPointForm, MinuteGoodPointForm, CheckForm
 from .models import GoodPoint, PictData, MinuteGoodPoint
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
@@ -15,10 +15,12 @@ class PictFormView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        [m for m in messages.get_messages(self.request)]
         messages.success(self.request, "新規データを作成しました")
         return super().form_valid(form)
 
     def form_invalid(self, form):
+        [m for m in messages.get_messages(self.request)]
         messages.success(self.request, "作成に失敗しました")
         return super().form_invalid(form)
 
@@ -49,10 +51,17 @@ class PostDetail(UserPassesTestMixin, LoginRequiredMixin, DetailView):
 
     def test_func(self):
         post_object = self.get_object()
-        return self.request.user.id == post_object.user.id
+        return self.request.user.id == post_object.user.id 
 
     def handle_no_permission(self):
         return redirect("menu:postlist")
+
+
+class PostDeleteView(DeleteView):
+    model = PictData
+    template_name = "menu/pictdelete.html"
+    success_url = reverse_lazy("menu:postlist")
+    context_object_name = "item"
 
 
 class GoodPointFormview(LoginRequiredMixin, CreateView):
@@ -128,8 +137,10 @@ class GoodPointDetail(UserPassesTestMixin, LoginRequiredMixin, DetailView, Model
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            "minuteGP_form":GoodPointForm,
+            "minuteGP_form":MinuteGoodPointForm,
             "minuteGP_model":MinuteGoodPoint.objects.filter(gopo=self.object),
+            "minuteGP_check": CheckForm,
+            "pict": self.object.pict,
         })
         return context
 
@@ -146,3 +157,20 @@ class GoodPointDetail(UserPassesTestMixin, LoginRequiredMixin, DetailView, Model
             else:
                 self.object = self.get_object()
                 return self.form_invalid(form_obj)
+
+        if 'check_btn_minuteGP' in request.POST:
+            check = request.POST.getlist["check_minuteGP"]
+
+
+class GPDeleteView(DeleteView):
+    model = GoodPoint
+    template_name = "menu/GDdelete.html"
+    context_object_name = "item"
+
+    def get_success_url(self):
+        return reverse('menu:goodpointdetail', kwargs={"pk":self.kwargs['pk']})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["pk"] = self.kwargs['pk']
+        return context

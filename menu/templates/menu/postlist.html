@@ -7,13 +7,13 @@
 </di>
 {% if user.is_authenticated %}
     <div class="container">
-        <div class="row">
+        <div class="row my-4">
             {% for item in items %}
-                <div class="col-4 p-2 border">
+                <div class="col-4 m-2 border">
                     <a class="" href=" {% url 'menu:postdetail' item.pk %} "> 
                         <div class="text-center pb-2"> {{ item.title }} </div>
-                        <img src="{{ item.picture.url }}" class="rounded float-right img-fluid col-auto" alt="">
-                    </a> 
+                        <img src="{{ item.picture.url }}" class="rounded float-right img-fluid col-auto mb-1" alt="">
+                    </a>
                 </div>
             {% endfor %}
         </div>

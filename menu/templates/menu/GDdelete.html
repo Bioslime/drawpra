@@ -1,0 +1,23 @@
+{% extends "accounts/base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+<div class="container my-3">
+    <div class="row d-flex align-items-center  .mx-auto">
+        <div class="col-6">
+            <form method="post">
+                {% csrf_token %}
+                <p>コメント内容</p>
+                <div class="card"> 
+                    <h4 class="card-body"> {{ item.text }} </h4>
+                </div>
+                <input type="submit" class="btn btn-danger m-3" value="削除する">
+            </form>
+        </div>
+    </div>
+    <div class="row m-2">
+        <a href = "{% url 'menu:goodpointdetail' pk %}"> コメント詳細に戻る </a>
+    </div>
+</div>
+
+{% endblock %}
